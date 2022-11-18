@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "710736433944",
+    "project_id": "merqueapp-c6be8",
+    "storage_bucket": "merqueapp-c6be8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710736433944:android:e1ab6667eff44353abc46d",
+        "android_client_info": {
+          "package_name": "com.example.merqueapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710736433944-unsp6tmgea60sgli90d7klcp2c6gej4j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.merqueapp",
+            "certificate_hash": "790cd7341a3363261a2802b3ef926405fd6ddd82"
+          }
+        },
+        {
+          "client_id": "710736433944-slp5vit17rlvmprhnc6alogp6rhomsfa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7ApNha1B5MzgW5a_3And3OjqoeMeWj5I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710736433944-slp5vit17rlvmprhnc6alogp6rhomsfa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
