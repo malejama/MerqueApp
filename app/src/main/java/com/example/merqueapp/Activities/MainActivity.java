@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button mButtonLogin;
     FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
-
+    private final int REQUEST_CODE_GOOGLE=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void signInGoogle () {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, REQUEST_CODE_GOOGLE);
+    }
 
     private void login() {
         String email=mTextInputEditTextEmail.getText().toString();
