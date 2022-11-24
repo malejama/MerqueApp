@@ -3,25 +3,28 @@ package com.example.merqueapp.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.merqueapp.models.Users;
+import com.example.merqueapp.Providers.AuthProviders;
+import com.example.merqueapp.Providers.UsersProviders;
 import com.example.merqueapp.R;
+import com.example.merqueapp.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import dmax.dialog.SpotsDialog;
 
 public class RegisterActivity extends AppCompatActivity {
     CircleImageView mCircleImageViewBack;
@@ -30,8 +33,12 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText mTextInputEditTextPasswordR;
     TextInputEditText mTextInputEditTextConfirmPassword;
     Button mButtonRegister;
-    FirebaseAuth mAuth;
-    FirebaseFirestore mFirestore;
+    //FirebaseAuth mAuth;
+    //FirebaseFirestore mFirestore;
+    AuthProviders mAuthProvider;
+    UsersProviders mUsersProvider;
+    AlertDialog mDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +52,14 @@ public class RegisterActivity extends AppCompatActivity {
         mTextInputEditTextConfirmPassword=findViewById(R.id.textInputEditTextConfirmPassword);
         mButtonRegister=findViewById(R.id.btnregister);
 
-        mAuth=FirebaseAuth.getInstance();
-        mFirestore=FirebaseFirestore.getInstance();
+        mAuthProvider=new AuthProviders();
+        mUsersProvider=new UsersProviders();
+
+        mDialog = new SpotsDialog.Builder()
+                .setContext(this)
+                .setMessage("Espere un momento...")
+                .setCancelable(false).build();
+
 
         mButtonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,21 +109,28 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
     private void createUser(final  String username, final String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener
-                (new OnCompleteListener<AuthResult>() {
+        mDialog.show();
+        mAuthProvider.register(email,password)
+        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            String id= mAuth.getCurrentUser().getUid();
-                            Map<String,Object> map= new HashMap<>();
-                            map.put("email", email);
-                            map.put("username", username);
-                            map.put("password", password);
-                            mFirestore.collection("Users").document(id).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            String id=mAuthProvider.getUid();
+                            Users user=new Users();
+                            user.setId (id);
+                            user.setEmail (email);
+                            user.setUsername(username);
+                            user.setPassword(password);
+
+                            mUsersProvider.create(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
+                                    mDialog.dismiss();
                                     if (task.isSuccessful()) {
                                         Toast.makeText(RegisterActivity.this, "el usuario se almaceno correctamente", Toast.LENGTH_SHORT).show();
+                                        Intent intent=new Intent(RegisterActivity.this,HomeActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK/Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
                                     }else{
                                         Toast.makeText(RegisterActivity.this, "no se pudo almacenar en l base de datos", Toast.LENGTH_SHORT).show();
                                     }
@@ -119,6 +139,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "El usuario se registro correctamente", Toast.LENGTH_SHORT).show();
 
                         } else {
+                            mDialog.dismiss();
                             Toast.makeText(RegisterActivity.this, "No se pudo registrar el usuario", Toast.LENGTH_SHORT).show();
                         }
                     }

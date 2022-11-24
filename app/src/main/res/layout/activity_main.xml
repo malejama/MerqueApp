@@ -15,11 +15,11 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:layout_width="230dp"
-            android:layout_height="230dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center"
             android:src="@drawable/merqueapp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="7dp"
             />
 
@@ -29,7 +29,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="5dp">
 
             <ImageView
                 android:layout_width="40dp"
@@ -97,10 +97,21 @@
             android:background="@drawable/rounded_button"
             android:text="INICIAR SESION" />
 
+        <com.google.android.gms.common.SignInButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnLoginSignInGoogle"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/rounded_button"
+            android:text="INICIAR SESION"
+            />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="45dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -113,7 +124,7 @@
                 android:id="@+id/TextViewRegister"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:text="REGISTRATE" />
 
         </LinearLayout>

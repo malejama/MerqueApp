@@ -15,6 +15,13 @@
         android:theme="@style/Theme.MerqueApp"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.CompleteProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activities.HomeActivity"
             android:exported="false">
             <meta-data
