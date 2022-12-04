@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         mView=inflater.inflate(R.layout.fragment_home, container, false);
         mFab=mView.findViewById(R.id.fab);
+
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
