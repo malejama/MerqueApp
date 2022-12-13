@@ -65,18 +65,19 @@ public class CompleteProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUser(String username) {
+    private void updateUser(final String username) {
         String id = mAuthProviders.getUid();
         Users user=new Users();
         user.setUsername(username);
-        user.setEmail(id);
+        user.setId(id);
         mDialog.show();
         mUsersProviders.update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
-            public void onComplete(@NonNull Task task) {
+            public void onComplete(@NonNull Task <Void> task) {
                 mDialog.dismiss();
                 if (task.isSuccessful()) {
                     Intent intent = new Intent(CompleteProfileActivity.this, HomeActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } else {
                     Toast.makeText(CompleteProfileActivity.this, "No se almaceno el usuario en la base de datos", Toast.LENGTH_SHORT).show();
